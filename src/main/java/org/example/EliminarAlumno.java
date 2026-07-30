@@ -1,3 +1,5 @@
+package org.example;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,7 +12,7 @@ public class EliminarAlumno {
 
         String sql = "DELETE FROM alumnos WHERE matricula = ?";
         try(Connection conect = ConexionBD.getConnection();
-        PreparedStatement pstmt = conect.prepareStatement(sql)){
+            PreparedStatement pstmt = conect.prepareStatement(sql)){
             pstmt.setString(1, matricula);
 
             int fila = pstmt.executeUpdate();

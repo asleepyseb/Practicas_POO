@@ -1,3 +1,5 @@
+package org.example;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,7 +21,7 @@ public class RegistrarAlumno {
      String sql = "INSERT INTO alumnos (matricula, nombre, edad, sexo, correo) VALUES (?, ?, ?, ?, ?)";
 
      try (Connection conect = ConexionBD.getConnection();
-     PreparedStatement pstmt = conn.prepareStateemnt(sql)){
+          PreparedStatement pstmt = conect.prepareStatement(sql)){
 
          pstmt.setString(1, matricula);
          pstmt.setString(2, nombre);
