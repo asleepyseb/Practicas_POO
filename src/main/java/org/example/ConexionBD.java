@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBD {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=practicas_db;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=practicas_db;encrypt=true;trustServerCertificate=true;";
+    private static final String USER = "sa";
+    private static final String PSWD = "UTTProy67";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL);
+        return DriverManager.getConnection(URL, USER, PSWD);
     }
 }
