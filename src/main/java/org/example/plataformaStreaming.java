@@ -11,6 +11,7 @@ public class plataformaStreaming {
 
     public plataformaStreaming() {
         this.cuentas = new ArrayList<>();
+        cargarCuentas();
     }
 
     public void registrarUsuario(cuentaUsuario cuenta){
