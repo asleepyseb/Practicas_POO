@@ -13,6 +13,7 @@ public class Main {
             System.out.println("1. Agregar cuenta");
             System.out.println("2. Imprimir reporte general");
             System.out.println("0. Salir");
+            System.out.print("Opción: ");
 
             try{
                 opcion = Integer.parseInt(sc.nextLine());

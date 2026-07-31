@@ -14,7 +14,7 @@ public class plataformaStreaming {
 
     public void registrarUsuario(cuentaUsuario cuenta){
         cuentas.add(cuenta); // guardar la cuenta
-        String sql = "INSERT INTO cuentas_streaming (correo_electronico, meses_activo, plan) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cuentas_streaming (correo_electronico, meses_activo, tipo_plan) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexionBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
