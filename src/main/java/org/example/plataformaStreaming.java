@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class plataformaStreaming {
     private ArrayList<cuentaUsuario> cuentas;
@@ -43,5 +44,36 @@ public class plataformaStreaming {
         }
         System.out.println("------------------");
         System.out.println("Total recaudado: $" + String.format("%.2f", totalRecaudado));
+    }
+    // metodo para cargar las cuentas de la BD
+    private void cargarCuentas(){
+        String sql = "SELECT correo_electronico, meses_activo, tipo_plan FROM cuentas_streaming";
+
+        try(Connection conn = ConexionBD.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String correoElec = rs.getString("correo_electronico");
+                int meses = rs.getInt("meses_activo");
+                String tipoPlan = rs.getString("tipo_plan");
+
+                // Crear la cuenta según el tipo de plan
+                planSusc planSeleccionado;
+                if ("planBasico".equals(tipoPlan)) {
+                    planSeleccionado = new planBasico();
+                } else if ("planEstandar".equals(tipoPlan)) {
+                    planSeleccionado = new planEstandar();
+                } else if ("planPremium".equals(tipoPlan)) {
+                    planSeleccionado = new planPremium();
+                } else {
+                    planSeleccionado = new planBasico();
+                }
+                // crea la cuenta para agregarla a la lista
+                cuentaUsuario cuentaBD = new cuentaSuscrip(correoElec, meses, planSeleccionado);
+                cuentas.add(cuentaBD);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cargar las cuentas: " + e.getMessage());
+        }
     }
 }
