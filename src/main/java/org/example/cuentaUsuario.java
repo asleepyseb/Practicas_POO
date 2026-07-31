@@ -4,15 +4,15 @@ public abstract class cuentaUsuario {
     private String correoElec;
     private int mesesActivo;
     // variable para calcular la tarifa
-    private planSuscripcion plan;
+    private planSusc plan;
 
-    public cuentaUsuario(String correoElec, int mesesActivo, planSuscripcion plan) {
+    public cuentaUsuario(String correoElec, int mesesActivo, planSusc plan) {
         this.correoElec = correoElec;
         this.mesesActivo = mesesActivo;
         this.plan = plan;
     }
 
-    public String obtenerTotalPagar() {
+    public double obtenerTotalPagar() {
         return plan.calcularCosto(this.mesesActivo);
     }
 
@@ -24,7 +24,7 @@ public abstract class cuentaUsuario {
         return mesesActivo;
     }
 
-    public planSuscripcion getPlan() {
+    public planSusc getPlan() {
         return plan;
     }
 }
