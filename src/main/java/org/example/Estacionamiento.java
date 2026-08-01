@@ -93,7 +93,7 @@ public class Estacionamiento {
         //actualizar a cobrado
         String sqlUpdate = "UPDATE registro_estacionamiento  SET estado = 'COBRADO', horas_totales = ?, total_pagado = ? WHERE placa = ? AND estado = 'DENTRO'";
         // liberar espacio
-        String sqlDelete = "DELETE FROM" +  tablaEspecifica + " WHERE placa = ?";
+        String sqlDelete = "DELETE FROM " +  tablaEspecifica + " WHERE placa = ?";
 
         try (Connection con = conexionBD.getConnection();
         PreparedStatement stmtUp = con.prepareStatement(sqlUpdate);
