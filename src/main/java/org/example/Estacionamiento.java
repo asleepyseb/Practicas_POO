@@ -46,7 +46,7 @@ public class Estacionamiento {
         else if (tipo.equals("tarifaMoto")) tablaEspecifica = "motos_activas";
         else if (tipo.equals("tarifaCamion")) tablaEspecifica = "camiones_activos";
 
-        String tablaGeneral = "INSERT INTO registro_estacionamiento (placa, tipo_vehhiculo, estado) VALUES (?, ?, 'DENTRO')";
+        String tablaGeneral = "INSERT INTO registro_estacionamiento (placa, tipo_vehiculo, estado) VALUES (?, ?, 'DENTRO')";
         String sqlEspecifico = "INSERT INTO " + tablaEspecifica + " (placa) VALUES (?)";
 
         try(Connection con = conexionBD.getConnection();
