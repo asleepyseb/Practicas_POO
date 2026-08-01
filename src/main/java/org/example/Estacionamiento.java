@@ -20,17 +20,20 @@ public class Estacionamiento {
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+            int contador = 0;
             while (rs.next()) {
                 String placa = rs.getString("placa");
                 String tipo = rs.getString("tipo_vehiculo");
 
                 //asignar las tarifas
                 tarifa tarifaAsignada = new tarifaAuto(); //tarifa por defecto (auto)
-                if(tipo.equals("tarifaMoto")) tarifaAsignada = new tarifaMoto();
-                if(tipo.equals("tarifaCamion")) tarifaAsignada = new tarifaCamion();
+                if(tipo.equalsIgnoreCase("tarifaMoto")) tarifaAsignada = new tarifaMoto();
+                if(tipo.equalsIgnoreCase("tarifaCamion")) tarifaAsignada = new tarifaCamion();
 
                 vehiculos.add(new vehiculoCliente(placa, 0, tarifaAsignada)); // 0 horas por defecto
+                contador++;
             }
+            System.out.println("Se cargaron " + contador + " vehiculos desde la base de datos.");
         }catch (SQLException e){
             System.out.println("Error al cargar los datos en el registro " + e.getMessage());
         }
