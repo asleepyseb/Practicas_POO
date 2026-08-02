@@ -20,7 +20,7 @@ public class GestorPaquetes {
             stmt.executeUpdate();
             System.out.println("Paquete registrado exitosamente | Destino: " + paquete.getDestino());
         } catch (SQLException e) {
-            System.err.println("Error al registrar el paquete: " + e.getMessage());
+            System.out.println("Error al registrar el paquete: " + e.getMessage());
         }
     }
 
@@ -45,7 +45,7 @@ public class GestorPaquetes {
                 System.out.println("No hay paquetes registrados.");
             }
         } catch (SQLException e) {
-            System.err.println("Error al mostrar los paquetes: " + e.getMessage());
+            System.out.println("Error al mostrar los paquetes: " + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class GestorPaquetes {
                 System.out.println("No se encontró un paquete con ID " + id + ".");
             }
         } catch (SQLException e) {
-            System.err.println("Error al editar el paquete: " + e.getMessage());
+            System.out.println("Error al editar el paquete: " + e.getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ public class GestorPaquetes {
                 System.out.println("No se encontró un paquete con ID " + id + ".");
             }
         } catch (SQLException e) {
-            System.err.println("Error al eliminar el paquete: " + e.getMessage());
+            System.out.println("Error al eliminar el paquete: " + e.getMessage());
         }
     }
 }
