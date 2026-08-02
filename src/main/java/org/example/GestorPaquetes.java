@@ -51,7 +51,7 @@ public class GestorPaquetes {
 
     // editar registro por ID
     public void editarPaquete(int id, Paquete nuevosDatos) {
-        String sql = "UPDATE registro_paquetes SET destinatario = ?, tipo_envio = ?, costo_total = ? WHERE id = ?";
+        String sql = "UPDATE registro_paquetes SET destinatario = ?, peso_kg = ?, tipo_envio = ?, costo_total = ? WHERE id = ?";
         try(Connection con = conexionBD.getConnection();
         PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, nuevosDatos.getDestino());
