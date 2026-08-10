@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Persona {
     private int id;
     private String nombre;
@@ -20,28 +21,70 @@ public class Persona {
         this.sexo = sexo;
     }
 
-    public static List<Persona> getAllbyName(String name) throws Exception {
+    public Persona(String nombre,  int edad, String sexo) throws SQLException{
+        this.nombre = nombre;
+        this.edad = edad;
+        this.sexo = sexo;
+    }
+
+    public void save() throws SQLException {
         try(Connection con = conexionBD.getConnection();
-        PreparedStatement ps = con.prepareStatement("select * from dueño where nombre = ?;");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO animal (nombre, especie, edad, sexo) VALUES (?, ?, ?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS)
         ){
-            List<Persona> list = new ArrayList<>();
-            ps.setString(1, name);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                list.add(new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getInt("edad"), rs.getString("sexo")));
+            stmt.setString(1, this.nombre);
+            stmt.setInt(2, this.edad);
+            stmt.setString(3, this.sexo);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+                this.id = rs.getInt(1);
             }
-            return list;
+        }catch(Exception e){
+            throw new SQLException();
         }
     }
 
-    public void saveAnimal(Animal animal) throws Exception {
+    public int delete() throws SQLException {
         try(Connection con = conexionBD.getConnection();
-        PreparedStatement stmt = con.prepareStatement("INSERT INTO animal (nombre, especie, edad, sexo) VALUES (?, ?, ?, ?)")
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM animal WHERE id = ?")
         ){
-            stmt.setString(1, animal.getNombre());
-            stmt.setString(2, animal.getTipo());
-            stmt.executeUpdate();
+            stmt.setInt(1, this.id);
+            return stmt.executeUpdate();
+         }
+    }
+
+    public int update() throws SQLException {
+        try (Connection con = conexionBD.getConnection();
+             PreparedStatement stmt = con.prepareStatement("UPDATE animales SET nombre =?, edad =?, sexo =? WHERE id = ?");
+        ) {
+            stmt.setString(1, this.nombre);
+            stmt.setInt(2, this.edad);
+            stmt.setString(3, this.sexo);
+            stmt.setInt(4, this.id);
+            return stmt.executeUpdate();
         }
     }
+
+    public void saveAnimal(Animal animal) throws SQLException {
+        try(Connection con = conexionBD.getConnection();
+        PreparedStatement stmt = con.prepareStatement("INSERT INTO animal(nombre, tipo, persona_id) VALUES (?, ?,?,?)")){
+            stmt.setString(1, animal.getNombre());
+            stmt.setString(2, animal.getTipo());
+            stmt.setInt(3, animal.getId());
+            stmt.setInt(4, animal.getId());
+        }
+    }
+
+   public void getAnimal() throws Exception {
+       try (Connection con = conexionBD.getConnection();
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM animales WHERE persona_id = ?")) {
+           stmt.setInt(1, id);
+           ResultSet rs = stmt.executeQuery();
+           animals = new ArrayList<Animal>();
+           while (rs.next()) {
+               this.animals.add(new Animal(rs.getInt("id"), rs.getString("nombre"), rs.getString("tipo"), rs.getInt("persona_id")));
+       }
+       }
+   }
 
 }
